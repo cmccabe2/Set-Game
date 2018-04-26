@@ -33,23 +33,34 @@ import javafx.geometry.Pos;
 @SuppressWarnings("restriction")
 public class GameApp extends Application
 {
-	private Button add3,exit;
+	private Button add3,exit,newGame;
 	private BorderPane mainPane;
 	private GridPane cardGrid;
 	private Game game;
-	
+	private HBox headPane;
 	@Override
 	public void start(Stage primaryStage)
 	{	
 		game = new Game();
 		
+		primaryStage.setTitle("Game of Set");
+		
 		mainPane = new BorderPane();
 		cardGrid=new GridPane();
 		
-		primaryStage.setTitle("Game of Set");
+		Text text= new Text("Game of Set");
+		headPane = new HBox(text);
+		headPane.setAlignment(Pos.CENTER);
+		mainPane.setTop(headPane);
+		
+		mainPane.setAlignment(cardGrid, Pos.CENTER);
+		
+		cardGrid.setPadding(new Insets(10));
+		cardGrid.setHgap(10);
+		cardGrid.setVgap(10);
 	    mainPane.setCenter(cardGrid);
 	    this.drawBoard();
-	    Scene scene = new Scene(mainPane,800,600);
+	    Scene scene = new Scene(mainPane,700,700);
 	    primaryStage.setScene(scene);
 	    primaryStage.getIcons().add(new Image("file:icon.png"));
 	    primaryStage.show();

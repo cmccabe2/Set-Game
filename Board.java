@@ -15,6 +15,7 @@ public class Board
 	 */
 	public Board(Deck d)
 	{
+		d.shuffle();
 		for(int r=0 ; r<3 ; r++)
 		{
 			board.add(new ArrayList<BoardSquare>());
@@ -56,9 +57,10 @@ public class Board
 	 */
 	public void add3(Deck d)
 	{
+		int boardCols=this.getCols();
 		for (int i=0 ; i<=2 ; i++)
 		{
-			board.get(i).add(new BoardSquare(d.getTopCard(),i,0));
+			board.get(i).add(new BoardSquare(d.getTopCard(),i,boardCols));//this.getCols()
 		}
 	}
 	
