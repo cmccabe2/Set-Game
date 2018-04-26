@@ -160,6 +160,7 @@ public class CardPane extends VBox
 		elip.setRadiusX(50);
 		elip.setRadiusY(25);
 		elip.setFill(fill);
+		elip.setStrokeWidth(3);
 		elip.setStroke(outline);
 		return elip;
 	}

@@ -27,7 +27,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 
 @SuppressWarnings("restriction")
@@ -38,6 +39,8 @@ public class GameApp extends Application
 	private GridPane cardGrid;
 	private Game game;
 	private HBox headPane;
+	private HBox buttonPane;
+	
 	@Override
 	public void start(Stage primaryStage)
 	{	
@@ -47,6 +50,20 @@ public class GameApp extends Application
 		
 		mainPane = new BorderPane();
 		cardGrid=new GridPane();
+		
+		add3 = new Button("Add 3");
+        add3.setOnAction(new EventHandler<ActionEvent>()
+        {
+	        @Override
+	        public void handle(ActionEvent event)
+	        {
+		        game.add3();
+		        drawBoard();
+	        }
+        });
+        
+		buttonPane= new HBox(add3);
+		mainPane.setBottom(buttonPane);
 		
 		Text text= new Text("Game of Set");
 		headPane = new HBox(text);
