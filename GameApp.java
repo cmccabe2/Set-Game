@@ -109,18 +109,22 @@ public class GameApp extends Application
 		
 		if (bs.getSelected()==true)
 		{
+			System.out.println("deselecting card");
+			bs.setSelected(false);
 			game.removeSelected(bs.getRow(), bs.getCol());
-			clicked.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+			cp2.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
 		}
 		else 
 		{
-			clicked.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
+			System.out.println("selecting card");
+			cp2.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
 			game.addToSelected(bs.getRow(), bs.getCol());
 		}
 		
 		if (game.numSelected()==3)
 		{
-			clicked.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
+			System.out.println("testing selected");
+			cp2.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
 			
 			game.testSelected();
 			this.drawBoard();

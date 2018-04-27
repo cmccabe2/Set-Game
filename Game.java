@@ -76,7 +76,12 @@ public class Game
 	 */
 	public boolean testSelected()
 	{
-		return Card.isSet(selectedSquares.get(0).getCard(),selectedSquares.get(1).getCard(),selectedSquares.get(2).getCard());
+		boolean isSet = Card.isSet(selectedSquares.get(0).getCard(),selectedSquares.get(1).getCard(),selectedSquares.get(2).getCard());
+		selectedSquares.remove(2);
+		selectedSquares.remove(1);
+		selectedSquares.remove(0);
+		System.out.println(selectedSquares);
+		return isSet;
 	}
 	
 	/**
