@@ -77,9 +77,24 @@ public class Game
 	public boolean testSelected()
 	{
 		boolean isSet = Card.isSet(selectedSquares.get(0).getCard(),selectedSquares.get(1).getCard(),selectedSquares.get(2).getCard());
+		for(int i = 0; i<3;i++) {
+			//this.removeSelected(selectedSquares.get(i).getRow(),selectedSquares.get(i).getCol());
+			if(isSet)
+			{
+				gameBoard.replaceCard(gameDeck.getTopCard(),selectedSquares.get(i).getRow(),selectedSquares.get(i).getCol());
+				
+			}
+			selectedSquares.get(i).setSelected(false);
+		}
+		
 		selectedSquares.remove(2);
 		selectedSquares.remove(1);
 		selectedSquares.remove(0);
+		
+		
+			
+			
+		
 		System.out.println(selectedSquares);
 		return isSet;
 	}
@@ -125,7 +140,10 @@ public class Game
 	}
 	
 	
-	
+	public Deck getDeck()
+	{
+		return gameDeck;
+	}
 	
 	
 }

@@ -50,7 +50,7 @@ public class CardPane extends VBox
 		
 		this.setSpacing(10); //sets spaces between multiple shapes
         this.setPadding(new Insets(10)); //space between shapes and border
-        this.setPrefSize(140, 210); // sets dimensions
+        this.setPrefSize(75, 125); // sets dimensions
         this.setAlignment(Pos.CENTER); // forces children to be centered in the middle of the card
         this.setStyle("-fx-background-color: #fff;" + "-fx-border-width: 3;" + "-fx-border-color: #000;" + "-fx-border-style: solid;");
 //		startX=(DEF_RECT_WIDTH*column);
@@ -132,8 +132,8 @@ public class CardPane extends VBox
 	private static Rectangle drawSquare(Color outline,Paint fill)
 	{
 		squareRect= new Rectangle();
-		squareRect.setWidth(50);
-		squareRect.setHeight(50);
+		squareRect.setWidth(40);
+		squareRect.setHeight(40);
 		squareRect.setFill(fill);
 		squareRect.setStrokeWidth(3);
 		squareRect.setStroke(outline);
@@ -143,7 +143,7 @@ public class CardPane extends VBox
 	
 	private static Polygon drawDiamond(Color outline, Paint fill)
 	{
-		Double[]points=new Double[] {0.0, 25.0, 50.0, 50.0, 100.0, 25.0, 50.0, 0.0};
+		Double[]points=new Double[] {0.0, 15.0, 30.0, 30.0, 60.0, 15.0, 30.0, 0.0};
 		poly=new Polygon();
 		poly.getPoints().addAll(points);
 		poly.setStrokeWidth(3);
@@ -155,10 +155,10 @@ public class CardPane extends VBox
 	private static Ellipse drawEllipse(Color outline,Paint fill)
 	{
 		Ellipse elip =new Ellipse();
-		elip.setCenterX(50);
-		elip.setCenterY(50);
-		elip.setRadiusX(50);
-		elip.setRadiusY(25);
+		elip.setCenterX(25);
+		elip.setCenterY(25);
+		elip.setRadiusX(25);
+		elip.setRadiusY(13.5);
 		elip.setFill(fill);
 		elip.setStrokeWidth(3);
 		elip.setStroke(outline);

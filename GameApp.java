@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -29,6 +30,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 
 
 @SuppressWarnings("restriction")
@@ -40,6 +42,7 @@ public class GameApp extends Application
 	private Game game;
 	private HBox headPane;
 	private HBox buttonPane;
+	private Label cardsRemaining;
 	
 	@Override
 	public void start(Stage primaryStage)
@@ -57,20 +60,35 @@ public class GameApp extends Application
 	        @Override
 	        public void handle(ActionEvent event)
 	        {
-		        game.add3();
-		        drawBoard();
+	        	if(game.getBoard().getCols()*game.getBoard().getRows()<18)
+	        	{
+			        game.add3();
+			        drawBoard();
+	        	}
+	        	else
+	        	{
+	        		add3.setDisable(true);
+	        	}
 	        }
         });
         
 		buttonPane= new HBox(add3);
 		mainPane.setBottom(buttonPane);
 		
+		exit = new Button("Exit");
+		exit.setOnAction(this::handleExit);
+		buttonPane.getChildren().add(exit);
+		
+		cardsRemaining=new Label(String.format("Cards Remaining: %d", game.getDeck().getSize()));
+		cardsRemaining.setFont(Font.font("Courier",20));
+		buttonPane.getChildren().add(cardsRemaining);
+		
 		Text text= new Text("Game of Set");
+		text.setFont(Font.font("Courier",20));
 		headPane = new HBox(text);
 		headPane.setAlignment(Pos.CENTER);
 		mainPane.setTop(headPane);
 		
-		mainPane.setAlignment(cardGrid, Pos.CENTER);
 		
 		cardGrid.setPadding(new Insets(10));
 		cardGrid.setHgap(10);
@@ -88,6 +106,7 @@ public class GameApp extends Application
 	public void drawBoard()
 	{
 		cardGrid.getChildren().clear();
+		cardsRemaining.setText(String.format("Cards remaining: %d", game.getDeck().getSize()));
 		Board displayBoard=game.getBoard();
 		
 		for (int row=0;row<displayBoard.getRows();row++)
@@ -101,6 +120,10 @@ public class GameApp extends Application
 		}
 		
 	}
+	private void handleExit(ActionEvent event) 
+	{
+        Platform.exit();
+    }
 	private void clickedEventHandler(MouseEvent click)
 	{
 		CardPane cp2= (CardPane) click.getSource();
@@ -125,7 +148,7 @@ public class GameApp extends Application
 		{
 			System.out.println("testing selected");
 			cp2.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-			
+//			System.out.println(game.testSelected());
 			game.testSelected();
 			this.drawBoard();
 		}

@@ -82,7 +82,10 @@ public class Deck
 		return ct == 0;
 	}
 	
-	
+	public int getSize()
+	{
+		return deck.size();
+	}
 
 	public static void main(String []args)
 	{
