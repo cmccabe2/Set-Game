@@ -50,7 +50,7 @@ public class CardPane extends VBox
         this.setPadding(new Insets(10)); //space between shapes and border
         this.setPrefSize(CARD_WIDTH, CARD_HEIGHT); // sets dimensions
         this.setAlignment(Pos.CENTER); // forces children to be centered in the middle of the card
-        this.setStyle("-fx-background-color: #D46A6A;" + "-fx-border-width: 3;" + "-fx-border-color: #000;" + "-fx-border-style: solid;");
+        this.setStyle("-fx-background-color: #D46A6A;" + "-fx-border-width: 4;"+ "-fx-border-color: #000;" + "-fx-border-style: solid;");
         
 
 		Color colorOfCard;

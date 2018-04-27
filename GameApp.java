@@ -33,9 +33,10 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 
 
-@SuppressWarnings("restriction")
+@SuppressWarnings("restriction")//gets rid of annoying yellow underlines for warnings 
 public class GameApp extends Application
 {
+	//initialize private instance variables
 	private Button add3,exit,newGame;
 	private BorderPane mainPane;
 	private GridPane cardGrid;
@@ -46,55 +47,70 @@ public class GameApp extends Application
 	private Color selected = Color.web("801515");
 	private Color unselectedBase = Color.web("D46A6A");
 	
+	/**
+	 * The start method for application that runs and sets up the primary stage,scene, and panes
+	 */
 	@Override
 	public void start(Stage primaryStage)
 	{	
-		game = new Game();
-		
-		primaryStage.setTitle("Game of Set");
-		
+		game = new Game();// create new game to run the program with
 		mainPane = new BorderPane();
 		cardGrid=new GridPane();
 		
-		add3 = new Button("Add 3");
+		primaryStage.setTitle("Game of Set");//sets the title of the window
+		
+		
+		//----------------------------------------------------------------
+		//Create buttons and event handlers
+		
+		//Add 3 button
+		add3 = new Button("Add 3");//assign add3 button
         add3.setOnAction(new EventHandler<ActionEvent>()
         {
 	        @Override
-	        public void handle(ActionEvent event)
+	        public void handle(ActionEvent event)//event handler for add3 button
 	        {
-	        	if(game.getBoard().getCols()*game.getBoard().getRows()<18)
+	        	if(game.getBoard().getCols()*game.getBoard().getRows()<15)//control number of cards user can have on game board
 	        	{
-			        game.add3();
-			        drawBoard();
+			        game.add3();//add 3 cards to the game
+			        drawBoard();//redraw the board with 3 more cards
 	        	}
-	        	else
+	        	else 
 	        	{
-	        		add3.setDisable(true);
+	        		game.add3();//add 3 cards to the game
+			        drawBoard();//redraw the board with 3 more cards
+	        		add3.setDisable(true);//disable the add3 button if the user can no longer add 3 cards
 	        	}
 	        }
         });
+
         
-        add3.setFont(Font.font("Courier",12));
-        add3.setTranslateX(0);
+        //Exit Button
+        exit = new Button("Exit");//assign new button "exit"
+		exit.setOnAction(this::handleExit);//event handler
+		
+		//New Game Button
+		newGame= new Button("New Game");//assign new button "newGame"
+		newGame.setOnAction(this::handleNewGame);//event handler
+		
+		//END BUTTONS
+		//-------------------------------------------------------------
+		
+		//Cards Remaining Label
+		cardsRemaining=new Label(String.format("Cards Remaining: %d", game.getDeck().getSize()));//create new label 
+		cardsRemaining.setFont(Font.font("Courier",20));
+		cardsRemaining.setTranslateX(0);
+		cardsRemaining.setPadding(new Insets(1));
+		cardsRemaining.setStyle("-fx-color: Black;"+"-fx-background-color: D46A6A;"+"-fx-border-color: Black;"+"-fx-border-width: 3;"+"-fx-border-radius: 3");
+		
         
 		buttonPane= new HBox();
 		mainPane.setBottom(buttonPane);
 		
-		exit = new Button("Exit");
-		exit.setTranslateX(0);
-		exit.setFont(Font.font("Courier",12));
-		exit.setOnAction(this::handleExit);
 		
-		newGame= new Button("New Game");
-		 newGame.setOnAction(this::handleNewGame);
-		
-		cardsRemaining=new Label(String.format("Cards Remaining: %d", game.getDeck().getSize()));
-		cardsRemaining.setFont(Font.font("Courier",20));
-		cardsRemaining.setTranslateX(0);
-		cardsRemaining.setPadding(new Insets(1));
-		
-		cardsRemaining.setStyle("-fx-color: Black;"+"-fx-background-color: D46A6A;"+"-fx-border-color: Black;"+"-fx-border-width: 3;"+"-fx-border-radius: 3");
-		
+		buttonPane= new HBox();
+		buttonPane.getChildren().addAll(exit,add3,newGame,cardsRemaining);
+		mainPane.setBottom(buttonPane);
 		
 		Text text= new Text("Game of Set");
 		text.setFont(Font.font("Courier",20));
@@ -105,7 +121,7 @@ public class GameApp extends Application
 		buttonPane.setSpacing(10);
 		buttonPane.setAlignment(Pos.CENTER_LEFT);
 		
-		buttonPane.getChildren().addAll(exit,add3,newGame,cardsRemaining);
+		
 		
 		cardGrid.setPadding(new Insets(10));
 		cardGrid.setHgap(10);
@@ -153,7 +169,8 @@ public class GameApp extends Application
 		game = new Game();
         this.drawBoard();
         cardsRemaining.setText(String.format("Cards remaining: %d", game.getDeck().getSize()));
-        System.gc();
+        add3.setDisable(false);
+        
 	}
 	
 	private void clickedEventHandler(MouseEvent click)
