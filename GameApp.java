@@ -43,6 +43,8 @@ public class GameApp extends Application
 	private HBox headPane;
 	private HBox buttonPane;
 	private Label cardsRemaining;
+	private Color selected = Color.web("801515");
+	private Color unselectedBase = Color.web("D46A6A");
 	
 	@Override
 	public void start(Stage primaryStage)
@@ -72,16 +74,27 @@ public class GameApp extends Application
 	        }
         });
         
-		buttonPane= new HBox(add3);
+        add3.setFont(Font.font("Courier",12));
+        add3.setTranslateX(0);
+        
+		buttonPane= new HBox();
 		mainPane.setBottom(buttonPane);
 		
 		exit = new Button("Exit");
+		exit.setTranslateX(0);
+		exit.setFont(Font.font("Courier",12));
 		exit.setOnAction(this::handleExit);
-		buttonPane.getChildren().add(exit);
+		
+		newGame= new Button("New Game");
+		 newGame.setOnAction(this::handleNewGame);
 		
 		cardsRemaining=new Label(String.format("Cards Remaining: %d", game.getDeck().getSize()));
 		cardsRemaining.setFont(Font.font("Courier",20));
-		buttonPane.getChildren().add(cardsRemaining);
+		cardsRemaining.setTranslateX(0);
+		cardsRemaining.setPadding(new Insets(1));
+		
+		cardsRemaining.setStyle("-fx-color: Black;"+"-fx-background-color: D46A6A;"+"-fx-border-color: Black;"+"-fx-border-width: 3;"+"-fx-border-radius: 3");
+		
 		
 		Text text= new Text("Game of Set");
 		text.setFont(Font.font("Courier",20));
@@ -89,13 +102,22 @@ public class GameApp extends Application
 		headPane.setAlignment(Pos.CENTER);
 		mainPane.setTop(headPane);
 		
+		buttonPane.setSpacing(10);
+		buttonPane.setAlignment(Pos.CENTER_LEFT);
+		
+		buttonPane.getChildren().addAll(exit,add3,newGame,cardsRemaining);
 		
 		cardGrid.setPadding(new Insets(10));
 		cardGrid.setHgap(10);
 		cardGrid.setVgap(10);
 	    mainPane.setCenter(cardGrid);
 	    this.drawBoard();
-	    Scene scene = new Scene(mainPane,700,700);
+	    
+	    mainPane.setStyle("-fx-background-color: AA3939");
+	    
+	    
+	    
+	    Scene scene = new Scene(mainPane,600,600);
 	    primaryStage.setScene(scene);
 	    primaryStage.getIcons().add(new Image("file:icon.png"));
 	    primaryStage.show();
@@ -118,16 +140,26 @@ public class GameApp extends Application
 				cardGrid.add(cp1, col, row);
 			}
 		}
-		
 	}
+	
+	
 	private void handleExit(ActionEvent event) 
 	{
         Platform.exit();
     }
+	
+	private void handleNewGame(ActionEvent event)
+	{
+		game = new Game();
+        this.drawBoard();
+        cardsRemaining.setText(String.format("Cards remaining: %d", game.getDeck().getSize()));
+        System.gc();
+	}
+	
 	private void clickedEventHandler(MouseEvent click)
 	{
 		CardPane cp2= (CardPane) click.getSource();
-		Pane clicked = (Pane) click.getSource();
+		//5Pane clicked = (Pane) click.getSource();
 		BoardSquare bs= cp2.getBoardSquare();
 		
 		if (bs.getSelected()==true)
@@ -135,20 +167,20 @@ public class GameApp extends Application
 			System.out.println("deselecting card");
 			bs.setSelected(false);
 			game.removeSelected(bs.getRow(), bs.getCol());
-			cp2.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+			cp2.setBackground(new Background(new BackgroundFill(unselectedBase, CornerRadii.EMPTY, Insets.EMPTY)));
 		}
 		else 
 		{
 			System.out.println("selecting card");
-			cp2.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+			cp2.setBackground(new Background(new BackgroundFill(selected, CornerRadii.EMPTY, Insets.EMPTY)));
 			game.addToSelected(bs.getRow(), bs.getCol());
 		}
 		
 		if (game.numSelected()==3)
 		{
 			System.out.println("testing selected");
-			cp2.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-//			System.out.println(game.testSelected());
+			cp2.setBackground(new Background(new BackgroundFill(selected, CornerRadii.EMPTY, Insets.EMPTY)));
+
 			game.testSelected();
 			this.drawBoard();
 		}

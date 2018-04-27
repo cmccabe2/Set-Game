@@ -1,5 +1,4 @@
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
@@ -26,12 +25,11 @@ public class CardPane extends VBox
 	private Card.Fill fill;
 	private Card.Num number;
 	//private Image image = new Image("hatch.png");
-	private static Rectangle rectCard,r1,squareRect;
+	private static Rectangle squareRect;
 	private static Polygon poly;
-	//private int startX,startY; 
-	private final static int DEF_RECT_WIDTH = 100; 
-	private final static int DEF_RECT_HEIGHT = 175;
-	//private final static int NUM_OF_POINTS=4;
+	private final static int CARD_WIDTH = 75; 
+	private final static int CARD_HEIGHT = 125;
+	
 
 
 	
@@ -50,14 +48,11 @@ public class CardPane extends VBox
 		
 		this.setSpacing(10); //sets spaces between multiple shapes
         this.setPadding(new Insets(10)); //space between shapes and border
-        this.setPrefSize(75, 125); // sets dimensions
+        this.setPrefSize(CARD_WIDTH, CARD_HEIGHT); // sets dimensions
         this.setAlignment(Pos.CENTER); // forces children to be centered in the middle of the card
-        this.setStyle("-fx-background-color: #fff;" + "-fx-border-width: 3;" + "-fx-border-color: #000;" + "-fx-border-style: solid;");
-//		startX=(DEF_RECT_WIDTH*column);
-//		startX=(DEF_RECT_HEIGHT*row);
-		
-		//r1=drawCardOutline(startX,startY,DEF_RECT_WIDTH,DEF_RECT_HEIGHT);
-		
+        this.setStyle("-fx-background-color: #D46A6A;" + "-fx-border-width: 3;" + "-fx-border-color: #000;" + "-fx-border-style: solid;");
+        
+
 		Color colorOfCard;
 		Color outline;
 		Paint fillType;
@@ -121,19 +116,12 @@ public class CardPane extends VBox
 			this.getChildren().add(shape);
 		}
 	}
-//	private static Rectangle drawCardOutline(int x,int y,int width, int height)
-//	{
-//		rectCard=new Rectangle(width,height);
-//		rectCard.setArcHeight(25);
-//		rectCard.setStyle("-fx-background-color: #fff;" + "-fx-border-width: 3;" + "-fx-border-color: #000;" + "-fx-border-style: solid;");
-//		return rectCard;
-//	}
-	
+
 	private static Rectangle drawSquare(Color outline,Paint fill)
 	{
 		squareRect= new Rectangle();
-		squareRect.setWidth(40);
-		squareRect.setHeight(40);
+		squareRect.setWidth(30);
+		squareRect.setHeight(30);
 		squareRect.setFill(fill);
 		squareRect.setStrokeWidth(3);
 		squareRect.setStroke(outline);
@@ -143,7 +131,7 @@ public class CardPane extends VBox
 	
 	private static Polygon drawDiamond(Color outline, Paint fill)
 	{
-		Double[]points=new Double[] {0.0, 15.0, 30.0, 30.0, 60.0, 15.0, 30.0, 0.0};
+		Double[]points=new Double[] {0.0, 45/4.0, 90.0/4, 90.0/4, 180.0/4, 45.0/4, 90.0/4, 0.0};
 		poly=new Polygon();
 		poly.getPoints().addAll(points);
 		poly.setStrokeWidth(3);
@@ -155,10 +143,10 @@ public class CardPane extends VBox
 	private static Ellipse drawEllipse(Color outline,Paint fill)
 	{
 		Ellipse elip =new Ellipse();
-		elip.setCenterX(25);
-		elip.setCenterY(25);
-		elip.setRadiusX(25);
-		elip.setRadiusY(13.5);
+		elip.setCenterX(20);
+		elip.setCenterY(20);
+		elip.setRadiusX(20);
+		elip.setRadiusY(10);
 		elip.setFill(fill);
 		elip.setStrokeWidth(3);
 		elip.setStroke(outline);
@@ -180,17 +168,32 @@ public class CardPane extends VBox
 	        new Scene(bgp);
 	        return bgp.snapshot(null, null);
 	}
-	
-	
-	
-	
 	public BoardSquare getBoardSquare()
 	{
 		return bs1;
 	}
 	
-	
-	
-	
-	
+	public int getRow()
+	{
+		return row;
+	}
+	public int getCol()
+	{
+		return column;
+	}
+	public Color getColor()
+	{
+		Color colorOfCard;
+		switch(this.color)
+		{
+		case RED: colorOfCard =Color.RED; 
+					break;
+		case GREEN: colorOfCard=Color.GREEN;
+					break;
+		case PURPLE: colorOfCard=Color.BLUE;
+					break;
+		default: colorOfCard=Color.TRANSPARENT;
+		}
+		return colorOfCard;
+	}
 }
