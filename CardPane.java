@@ -27,8 +27,8 @@ public class CardPane extends VBox
 	//private Image image = new Image("hatch.png");
 	private static Rectangle squareRect;
 	private static Polygon poly;
-	private final static int CARD_WIDTH = 75; 
-	private final static int CARD_HEIGHT = 125;
+	private final static int CARD_WIDTH = 95; 
+	private final static int CARD_HEIGHT = 135;
 	
 
 
@@ -50,6 +50,8 @@ public class CardPane extends VBox
         this.setPadding(new Insets(10)); //space between shapes and border
         this.setPrefSize(CARD_WIDTH, CARD_HEIGHT); // sets dimensions
         this.setAlignment(Pos.CENTER); // forces children to be centered in the middle of the card
+        this.setMinWidth(CARD_WIDTH);
+        this.setMinHeight(CARD_HEIGHT);
         this.setStyle("-fx-background-color: #D46A6A;" + "-fx-border-width: 4;"+ "-fx-border-color: #000;" + "-fx-border-style: solid;");
         
 

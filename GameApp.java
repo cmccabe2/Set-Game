@@ -46,6 +46,8 @@ public class GameApp extends Application
 	private Label cardsRemaining;
 	private Color selected = Color.web("801515");
 	private Color unselectedBase = Color.web("D46A6A");
+	private Scene scene;
+	private Stage manipulateStage;
 	
 	/**
 	 * The start method for application that runs and sets up the primary stage,scene, and panes
@@ -56,6 +58,7 @@ public class GameApp extends Application
 		game = new Game();// create new game to run the program with
 		mainPane = new BorderPane();
 		cardGrid=new GridPane();
+		manipulateStage=primaryStage;
 		
 		primaryStage.setTitle("Game of Set");//sets the title of the window
 		
@@ -101,7 +104,7 @@ public class GameApp extends Application
 		cardsRemaining.setFont(Font.font("Courier",20));
 		cardsRemaining.setTranslateX(0);
 		cardsRemaining.setPadding(new Insets(1));
-		cardsRemaining.setStyle("-fx-color: Black;"+"-fx-background-color: D46A6A;"+"-fx-border-color: Black;"+"-fx-border-width: 3;"+"-fx-border-radius: 3");
+		cardsRemaining.setStyle("-fx-color: Black;"+"-fx-background-color: D46A6A;"+"-fx-border-color: Black;"+"-fx-border-width: 3;");
 		
         
 		buttonPane= new HBox();
@@ -130,10 +133,11 @@ public class GameApp extends Application
 	    this.drawBoard();
 	    
 	    mainPane.setStyle("-fx-background-color: AA3939");
+	    mainPane.setMargin(cardGrid, new Insets(0,0,0,85));
+	   
 	    
 	    
-	    
-	    Scene scene = new Scene(mainPane,600,600);
+	    scene = new Scene(mainPane,600,600);
 	    primaryStage.setScene(scene);
 	    primaryStage.getIcons().add(new Image("file:icon.png"));
 	    primaryStage.show();
@@ -156,6 +160,19 @@ public class GameApp extends Application
 				cardGrid.add(cp1, col, row);
 			}
 		}
+	    int col = game.getBoard().getCols();
+	    switch(col)
+	    {
+	    	case 4: mainPane.setMargin(cardGrid, new Insets(0,0,0,85));
+	    				break;
+	    	case 5: mainPane.setMargin(cardGrid, new Insets(0,0,0,35));
+	    				break;
+	    	case 6: mainPane.setMargin(cardGrid, new Insets(0,0,0,25));
+	    			manipulateStage.setWidth(700);
+	    				break;
+	    	default: mainPane.setMargin(cardGrid, new Insets(0,0,0,0));
+	    }
+
 	}
 	
 	
@@ -170,6 +187,7 @@ public class GameApp extends Application
         this.drawBoard();
         cardsRemaining.setText(String.format("Cards remaining: %d", game.getDeck().getSize()));
         add3.setDisable(false);
+        manipulateStage.setWidth(600);
         
 	}
 	
