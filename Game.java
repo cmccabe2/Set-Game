@@ -81,8 +81,7 @@ public class Game
 			//this.removeSelected(selectedSquares.get(i).getRow(),selectedSquares.get(i).getCol());
 			if(isSet)
 			{
-				gameBoard.replaceCard(gameDeck.getTopCard(),selectedSquares.get(i).getRow(),selectedSquares.get(i).getCol());
-				
+				gameBoard.replaceCard(gameDeck.getTopCard(),selectedSquares.get(i).getRow(),selectedSquares.get(i).getCol());	
 			}
 			selectedSquares.get(i).setSelected(false);
 		}
@@ -90,11 +89,7 @@ public class Game
 		selectedSquares.remove(2);
 		selectedSquares.remove(1);
 		selectedSquares.remove(0);
-		
-		
-			
-			
-		
+
 		System.out.println(selectedSquares);
 		return isSet;
 	}
@@ -139,7 +134,10 @@ public class Game
 		return gameBoard.toString();
 	}
 	
-	
+	/**
+	 * returns the deck being used
+	 * @return deck object
+	 */
 	public Deck getDeck()
 	{
 		return gameDeck;

@@ -38,7 +38,6 @@ public class Board
 		board.get(row).set(col, new BoardSquare(c,row,col));
 	}
 	
-	
 	/**
 	 * Returns the BoardSquare at the given row and col values
 	 * @param row row val
@@ -75,6 +74,7 @@ public class Board
 	{
 		return board.get(row).get(col).getCard();
 	}
+	
 	
 	
 	/**

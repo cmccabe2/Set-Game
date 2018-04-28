@@ -53,8 +53,11 @@ public class Deck
 	 */
 	public Card getTopCard()
 	{
-		Card topCard= deck.get(0);
-		deck.remove(0);
+		Card topCard;
+		
+			topCard= deck.get(0);
+			deck.remove(0);
+		
 		return topCard;
 	}
 	
@@ -82,6 +85,10 @@ public class Deck
 		return ct == 0;
 	}
 	
+	/**
+	 * get the size of the deck
+	 * @return int value of deck size
+	 */
 	public int getSize()
 	{
 		return deck.size();

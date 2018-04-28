@@ -17,6 +17,7 @@ import javafx.geometry.Pos;
 @SuppressWarnings("restriction")
 public class CardPane extends VBox
 {	
+	//create variables
 	private Card card;
 	private BoardSquare bs1;
 	private int row,column;
@@ -24,7 +25,6 @@ public class CardPane extends VBox
 	private Card.Shape shape;
 	private Card.Fill fill;
 	private Card.Num number;
-	//private Image image = new Image("hatch.png");
 	private static Rectangle squareRect;
 	private static Polygon poly;
 	private final static int CARD_WIDTH = 95; 
@@ -32,34 +32,41 @@ public class CardPane extends VBox
 	
 
 
-	
+	/**
+	 * Constructor for the cardpane class
+	 * gets the card attributes from boardsquare and styles the cardpane
+	 * draws shapes on the cards also
+	 * @param bs boardsquare to get card information from 
+	 */
 	public CardPane(BoardSquare bs)
 	{
-		super();
+		super();//call super constructor
+		
+		//assign card attributes to instance variables
 		card=bs.getCard();
 		row=bs.getRow();
 		column=bs.getCol();
 		bs1=bs;
-		
 		this.color=bs.getCard().getColor();
 		this.shape=bs.getCard().getShape();
 		this.fill=bs.getCard().getFill();
 		this.number=bs.getCard().getNum();
 		
-		this.setSpacing(10); //sets spaces between multiple shapes
+		this.setSpacing(10); //sets spaces between shapes
         this.setPadding(new Insets(10)); //space between shapes and border
-        this.setPrefSize(CARD_WIDTH, CARD_HEIGHT); // sets dimensions
-        this.setAlignment(Pos.CENTER); // forces children to be centered in the middle of the card
-        this.setMinWidth(CARD_WIDTH);
-        this.setMinHeight(CARD_HEIGHT);
-        this.setStyle("-fx-background-color: #D46A6A;" + "-fx-border-width: 4;"+ "-fx-border-color: #000;" + "-fx-border-style: solid;");
+        this.setPrefSize(CARD_WIDTH, CARD_HEIGHT);//set the dimensions
+        this.setAlignment(Pos.CENTER);//set children to the center of the card
+        this.setMinWidth(CARD_WIDTH);//set min width
+        this.setMinHeight(CARD_HEIGHT);//set min height
+        this.setStyle("-fx-background-color: #D46A6A;" + "-fx-border-width: 4;"+ "-fx-border-color: #000;" + "-fx-border-style: solid;"+
+        													"-fx-border-radius:3;"+"-fx-background-radius:3;");//style the cardpane
         
-
+        //initialize variables for card attributes
 		Color colorOfCard;
 		Color outline;
 		Paint fillType;
 		
-		switch(card.getColor())
+		switch(card.getColor())//switch statement to go from card.color to a javafx color
 		{
 		case RED: colorOfCard =Color.RED; 
 					break;
@@ -71,7 +78,7 @@ public class CardPane extends VBox
 		}
 		
 	
-		switch(card.getFill())
+		switch(card.getFill())//switch statement to store fill type in a variable
 		{
 		case SOLID:fillType= colorOfCard;
 					 outline = colorOfCard;
@@ -88,7 +95,7 @@ public class CardPane extends VBox
 		
 		int shapeNumber;
 		
-		switch(card.getNum())
+		switch(card.getNum())//switch to get integer value of number of shapes
 		{
 		case ONE: shapeNumber=1;
 					break;
@@ -101,7 +108,7 @@ public class CardPane extends VBox
 		
 		
 		Node shape;
-		for (int i=0;i<shapeNumber;i++)
+		for (int i=0;i<shapeNumber;i++)//determine what shape the card holds and draw them 
 		{
 			switch(this.shape)
 			{
@@ -115,74 +122,116 @@ public class CardPane extends VBox
 			
 			}
 			
-			this.getChildren().add(shape);
+			this.getChildren().add(shape);//add the shape to the card
 		}
 	}
-
+	
+	
+	/**
+	 * Draws a square shape to add to the cardpane
+	 * @param outline outline color for the shape(stroke)
+	 * @param fill fill color for the shape
+	 * @return square shape to add to card
+	 */
 	private static Rectangle drawSquare(Color outline,Paint fill)
 	{
-		squareRect= new Rectangle();
-		squareRect.setWidth(30);
-		squareRect.setHeight(30);
-		squareRect.setFill(fill);
-		squareRect.setStrokeWidth(3);
-		squareRect.setStroke(outline);
+		squareRect= new Rectangle();//new rect
+		squareRect.setWidth(30);//width
+		squareRect.setHeight(30);//height
+		squareRect.setFill(fill);//fill
+		squareRect.setStrokeWidth(3);//border width
+		squareRect.setStroke(outline);//border color
 		return squareRect;
 	}
 	
-	
+	/**
+	 * Draws a diamond shape to add to the cardpane
+	 * @param outline outline color for the shape(stroke)
+	 * @param fill fill color for the shape
+	 * @return diamond shape to add to card
+	 */
 	private static Polygon drawDiamond(Color outline, Paint fill)
 	{
-		Double[]points=new Double[] {0.0, 45/4.0, 90.0/4, 90.0/4, 180.0/4, 45.0/4, 90.0/4, 0.0};
-		poly=new Polygon();
-		poly.getPoints().addAll(points);
-		poly.setStrokeWidth(3);
-		poly.setStroke(outline);
-		poly.setFill(fill);
+		Double[]points=new Double[] {0.0, 45/4.0, 90.0/4, 90.0/4, 180.0/4, 45.0/4, 90.0/4, 0.0};//create point array for the diamond
+		poly=new Polygon();//new poly
+		poly.getPoints().addAll(points);//add all the points to the polygon
+		poly.setStrokeWidth(3);//set border width
+		poly.setStroke(outline);//set border color
+		poly.setFill(fill);//set fill
 		return poly;
 	}
 	
+	/**
+	 * Draws an ellipse shape to add to the cardpane
+	 * @param outline outline color for the shape(stroke)
+	 * @param fill fill color for the shape
+	 * @return ellipse shape to add to card
+	 */
 	private static Ellipse drawEllipse(Color outline,Paint fill)
 	{
-		Ellipse elip =new Ellipse();
-		elip.setCenterX(20);
-		elip.setCenterY(20);
-		elip.setRadiusX(20);
-		elip.setRadiusY(10);
-		elip.setFill(fill);
-		elip.setStrokeWidth(3);
-		elip.setStroke(outline);
+		Ellipse elip =new Ellipse();//new ellipse
+		elip.setCenterX(20);//centerx
+		elip.setCenterY(20);//centery
+		elip.setRadiusX(20);//radiusx
+		elip.setRadiusY(10);//radiusy
+		elip.setFill(fill);//fill
+		elip.setStrokeWidth(3);//border width
+		elip.setStroke(outline);//border color
 		return elip;
 	}
 
+	/**
+	 * make a fill type that appears hatched(diagonal lines with white background
+	 * @param color color of the lines
+	 * @return image of background image
+	 */
 	 private Image makeHatched(Color color) 
 	 {
-	        Pane bgp = new Pane();
+	        Pane bgp = new Pane();//new pane
 	        
-	        bgp.setPrefSize(20, 20);
-	        Line line = new Line(0, 0, 25, 25);
+	        bgp.setPrefSize(20, 20);//size of pane
+	        Line line = new Line(0, 0, 25, 25);//new line
 	        
-	        line.setRotate(0);
-	        line.setStroke(color);
-	        line.setStrokeWidth(5);
-	        bgp.getChildren().addAll(line);
+	        line.setRotate(0);//rotate the line
+	        line.setStroke(color);//change line color
+	        line.setStrokeWidth(5);//change line width
+	        bgp.getChildren().addAll(line);//add line to pane
 	        
-	        new Scene(bgp);
-	        return bgp.snapshot(null, null);
+	        new Scene(bgp);//new scene
+	        return bgp.snapshot(null, null);//return snapshot of that scene
 	}
+	 
+	 /**
+	  * Get the boardSquare
+	  * @return boardsquare
+	  */
 	public BoardSquare getBoardSquare()
 	{
 		return bs1;
 	}
 	
+	/**
+	 * get the row
+	 * @return integer value of the row
+	 */
 	public int getRow()
 	{
 		return row;
 	}
+	
+	/**
+	 * get the column
+	 * @return integer value of the column
+	 */
 	public int getCol()
 	{
 		return column;
 	}
+	
+	/**
+	 * get the color of the card
+	 * @return Color of the card 
+	 */
 	public Color getColor()
 	{
 		Color colorOfCard;

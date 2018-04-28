@@ -2,26 +2,15 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
-
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-
 import javafx.scene.paint.Color;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Background;
@@ -56,9 +45,9 @@ public class GameApp extends Application
 	public void start(Stage primaryStage)
 	{	
 		game = new Game();// create new game to run the program with
-		mainPane = new BorderPane();
-		cardGrid=new GridPane();
-		manipulateStage=primaryStage;
+		mainPane = new BorderPane();// create main border pain
+		cardGrid=new GridPane();//new gridpane to hold cards
+		manipulateStage=primaryStage;//assign manipulate stage to primaryStage
 		
 		primaryStage.setTitle("Game of Set");//sets the title of the window
 		
@@ -101,57 +90,53 @@ public class GameApp extends Application
 		
 		//Cards Remaining Label
 		cardsRemaining=new Label(String.format("Cards Remaining: %d", game.getDeck().getSize()));//create new label 
-		cardsRemaining.setFont(Font.font("Courier",20));
-		cardsRemaining.setTranslateX(0);
-		cardsRemaining.setPadding(new Insets(1));
-		cardsRemaining.setStyle("-fx-color: Black;"+"-fx-background-color: D46A6A;"+"-fx-border-color: Black;"+"-fx-border-width: 3;");
+		cardsRemaining.setFont(Font.font("Courier",20));//set font of the label
+		cardsRemaining.setPadding(new Insets(1));//padding inside the label 
+		cardsRemaining.setStyle("-fx-color: Black;"+"-fx-background-color: D46A6A;"+"-fx-border-color: Black;"
+										+"-fx-border-width: 3;"+"-fx-border-radius:3;"+"-fx-background-radius:3;");//add style rules to the label
 		
-        
-		buttonPane= new HBox();
-		mainPane.setBottom(buttonPane);
+		buttonPane= new HBox();//new pane for the bottom of the border pane
+		buttonPane.getChildren().addAll(exit,add3,newGame,cardsRemaining);//add all the buttons and the label to the pane
+		mainPane.setBottom(buttonPane);//set the bottom of the border pane to the HBox buttonPane
 		
+		Text text= new Text("Game of Set");//new text for the header title
+		text.setFont(Font.font("Courier",20));//set the font of the text
+		headPane = new HBox(text);//new header pane
+		headPane.setAlignment(Pos.CENTER);//set the header to the center
+		mainPane.setTop(headPane);//set the top to the header pane
 		
-		buttonPane= new HBox();
-		buttonPane.getChildren().addAll(exit,add3,newGame,cardsRemaining);
-		mainPane.setBottom(buttonPane);
-		
-		Text text= new Text("Game of Set");
-		text.setFont(Font.font("Courier",20));
-		headPane = new HBox(text);
-		headPane.setAlignment(Pos.CENTER);
-		mainPane.setTop(headPane);
-		
-		buttonPane.setSpacing(10);
-		buttonPane.setAlignment(Pos.CENTER_LEFT);
+		buttonPane.setSpacing(10);//adjust spacing between buttons
+		buttonPane.setAlignment(Pos.CENTER_LEFT);//set the alignment of the buttons
 		
 		
 		
-		cardGrid.setPadding(new Insets(10));
-		cardGrid.setHgap(10);
-		cardGrid.setVgap(10);
-	    mainPane.setCenter(cardGrid);
-	    this.drawBoard();
+		cardGrid.setPadding(new Insets(10));//add padding to the cards
+		cardGrid.setHgap(10);//set a horizontal gap between cards
+		cardGrid.setVgap(10);//set a vertical gap between cards
+	    mainPane.setCenter(cardGrid);//set the center of the borderpane to the cardgrid
+	    this.drawBoard();//draw the board
 	    
-	    mainPane.setStyle("-fx-background-color: AA3939");
-	    mainPane.setMargin(cardGrid, new Insets(0,0,0,85));
-	   
+	    mainPane.setStyle("-fx-background-color: AA3939");//set the background color of the window
+	    mainPane.setMargin(cardGrid, new Insets(0,0,0,85));//add margins for initial board draw
 	    
-	    
-	    scene = new Scene(mainPane,600,600);
-	    primaryStage.setScene(scene);
-	    primaryStage.getIcons().add(new Image("file:icon.png"));
-	    primaryStage.show();
+	    scene = new Scene(mainPane,600,600);//set the scene to the border pane and give initial dimensions
+	    primaryStage.setScene(scene);//set the stage scene to "scene"
+	    primaryStage.getIcons().add(new Image("file:icon.png"));//change icon of the window
+	    primaryStage.show();//show the application
 
 	}
 	
-	
+	/**
+	 * Draw the board by looping through the deck and adding cardpanes
+	 * center the grid in the window
+	 */
 	public void drawBoard()
 	{
-		cardGrid.getChildren().clear();
-		cardsRemaining.setText(String.format("Cards remaining: %d", game.getDeck().getSize()));
+		cardGrid.getChildren().clear();//clear the board
+		cardsRemaining.setText(String.format("Cards remaining: %d", game.getDeck().getSize()));//reset cards remaining
 		Board displayBoard=game.getBoard();
 		
-		for (int row=0;row<displayBoard.getRows();row++)
+		for (int row=0;row<displayBoard.getRows();row++)//loop through cards and add them to the grid
 		{
 			for(int col=0;col<displayBoard.getCols();col++)
 			{
@@ -160,8 +145,8 @@ public class GameApp extends Application
 				cardGrid.add(cp1, col, row);
 			}
 		}
-	    int col = game.getBoard().getCols();
-	    switch(col)
+	    int col = game.getBoard().getCols();//get the number of columns currently on the board
+	    switch(col)//switch through the number of columns to keep the grid centered in the window
 	    {
 	    	case 4: mainPane.setMargin(cardGrid, new Insets(0,0,0,85));
 	    				break;
@@ -175,49 +160,59 @@ public class GameApp extends Application
 
 	}
 	
-	
+	/**
+	 * exit the program when the exit button is clicked
+	 * @param event mouse click event
+	 */
 	private void handleExit(ActionEvent event) 
 	{
         Platform.exit();
     }
 	
+	/**
+	 * creates a new version of the game by redrawing the board with a 
+	 * new deck and resetting  cardsremaining, add3 disabled, and window width
+	 * @param event mouse click event
+	 */
 	private void handleNewGame(ActionEvent event)
 	{
-		game = new Game();
-        this.drawBoard();
-        cardsRemaining.setText(String.format("Cards remaining: %d", game.getDeck().getSize()));
-        add3.setDisable(false);
-        manipulateStage.setWidth(600);
-        
+		game = new Game();//create new game
+        this.drawBoard();//redraw the board
+        cardsRemaining.setText(String.format("Cards remaining: %d", game.getDeck().getSize()));//reset the amount of cards remaining
+        add3.setDisable(false);//re-enable the add3 button
+        manipulateStage.setWidth(600);//set the window width back to 600 if it was changed in the previous game
 	}
 	
+	/**
+	 * Event handler for when the user clicks on a card
+	 * @param click mouse event 
+	 */
 	private void clickedEventHandler(MouseEvent click)
 	{
-		CardPane cp2= (CardPane) click.getSource();
-		//5Pane clicked = (Pane) click.getSource();
-		BoardSquare bs= cp2.getBoardSquare();
+		CardPane cp2= (CardPane) click.getSource();//new cardpane with card source
+		BoardSquare bs= cp2.getBoardSquare();//new boardsqure
 		
-		if (bs.getSelected()==true)
+		if (bs.getSelected()==true)//if already selected
 		{
-			System.out.println("deselecting card");
-			bs.setSelected(false);
-			game.removeSelected(bs.getRow(), bs.getCol());
-			cp2.setBackground(new Background(new BackgroundFill(unselectedBase, CornerRadii.EMPTY, Insets.EMPTY)));
+			System.out.println("deselecting card");//console output
+			bs.setSelected(false);//set selected to false
+			game.removeSelected(bs.getRow(), bs.getCol());//remove the card from the arraylist of selected cards
+			cp2.setBackground(new Background(new BackgroundFill(unselectedBase, CornerRadii.EMPTY, Insets.EMPTY)));//set the background back to the base color
 		}
 		else 
 		{
-			System.out.println("selecting card");
-			cp2.setBackground(new Background(new BackgroundFill(selected, CornerRadii.EMPTY, Insets.EMPTY)));
-			game.addToSelected(bs.getRow(), bs.getCol());
+			System.out.println("selecting card");//console output
+			cp2.setBackground(new Background(new BackgroundFill(selected, CornerRadii.EMPTY, Insets.EMPTY)));//set the card to selected color
+			game.addToSelected(bs.getRow(), bs.getCol());//add the card to the selected card arraylist
 		}
 		
-		if (game.numSelected()==3)
+		if (game.numSelected()==3)//if three are selected
 		{
-			System.out.println("testing selected");
-			cp2.setBackground(new Background(new BackgroundFill(selected, CornerRadii.EMPTY, Insets.EMPTY)));
+			System.out.println("testing selected");//console output
+			cp2.setBackground(new Background(new BackgroundFill(selected, CornerRadii.EMPTY, Insets.EMPTY)));//set the card to the selected color
 
-			game.testSelected();
-			this.drawBoard();
+			game.testSelected();//test the 3 selected cards
+			this.drawBoard();//redraw the board
 		}
 	}
 	
